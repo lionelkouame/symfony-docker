@@ -1,8 +1,8 @@
 # ADR 0006: Strict Non-Nullable Value Objects, Optionality on the Entity
 
-* **Status**: Accepted
-* **Date**: 2026-11-27
-* **Origin**: Compliance Store ADR 0006
+- **Status**: Accepted
+- **Date**: 2026-11-27
+- **Origin**: Compliance Store ADR 0006
 
 ---
 
@@ -31,10 +31,10 @@ $customer = Customer::register(
 
 ### Positive
 
-* Code receiving a Value Object never null-checks its content.
-* The same Value Object is reused where it is optional and where it is mandatory.
-* Optionality is visible in the entity's signature.
+- Code receiving a Value Object never null-checks its content.
+- The same Value Object is reused where it is optional and where it is mandatory.
+- Optionality is visible in the entity's signature.
 
 ### Negative
 
-* Explicit ternaries in use cases for every optional attribute.
+- Explicit ternaries in use cases for every optional attribute.

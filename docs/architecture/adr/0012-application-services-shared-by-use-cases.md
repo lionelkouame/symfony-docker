@@ -1,8 +1,8 @@
 # ADR 0012: Application Services for Logic Shared by Use Cases
 
-* **Status**: Accepted
-* **Date**: 2026-11-27
-* **Origin**: Compliance Store ADR 0016
+- **Status**: Accepted
+- **Date**: 2026-11-27
+- **Origin**: Compliance Store ADR 0016
 
 ---
 
@@ -29,13 +29,13 @@ holds no business rule but only orchestrates ports.
 
 ### Positive
 
-* Shared orchestration and its compensation are written and tested once.
-* `src/Application` has an explicit, feature-grouped place for it, with a checked boundary.
+- Shared orchestration and its compensation are written and tested once.
+- `src/Application` has an explicit, feature-grouped place for it, with a checked boundary.
 
 ### Negative
 
-* One more indirection; the "second consumer" rule requires judgement.
+- One more indirection; the "second consumer" rule requires judgement.
 
 ## Changes from the original
 
-* The Deptrac rule suggested by the original ADR is implemented in `deptrac.yaml`.
+- The Deptrac rule suggested by the original ADR is implemented in `deptrac.yaml`.

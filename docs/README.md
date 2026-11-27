@@ -2,15 +2,15 @@
 
 ## 🧭 Template Clean Architecture
 
-* [La démarche du template](template/README.md) — pourquoi et comment il étend dunglas/symfony-docker
-* [Démarrer un nouveau projet](template/new-project.md)
-* [Mettre à jour le template et les projets](template/updating.md)
+- [La démarche du template](template/README.md) — pourquoi et comment il étend dunglas/symfony-docker
+- [Démarrer un nouveau projet](template/new-project.md)
+- [Mettre à jour le template et les projets](template/updating.md)
 
 ## 🏛️ Architecture
 
-* [Guide d'architecture](architecture/overview.md) — couches, cycle d'une requête, conventions,
+- [Guide d'architecture](architecture/overview.md) — couches, cycle d'une requête, conventions,
   gestion des erreurs, ajout d'une fonctionnalité pas à pas
-* [Architecture Decision Records](architecture/adr/README.md) — les 17 décisions et leur justification
+- [Architecture Decision Records](architecture/adr/README.md) — les 17 décisions et leur justification
 
 ## 🐳 Infrastructure Docker (documentation de dunglas/symfony-docker)
 
@@ -32,6 +32,6 @@ avec l'upstream.
 
 ## 🧪 Tester l'API à la main
 
-Les requêtes du client HTTP (JetBrains / VS Code REST Client) sont dans
-[`tests/http/v1/`](../tests/http/v1/), regroupées par fonctionnalité ; environnements dans
-`tests/http/http-client.env.json`.
+Les requêtes du client HTTP (JetBrains / Visual Studio Code REST Client) sont dans
+[`tests/http/v1/`](../tests/http/v1/), regroupées par fonctionnalité ; l'hôte se règle par les
+variables `@baseUrl` / `@apiUrl` en tête de chaque fichier.

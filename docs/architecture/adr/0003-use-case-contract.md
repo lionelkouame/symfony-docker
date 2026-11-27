@@ -1,8 +1,8 @@
 # ADR 0003: Use Case Contract — Request, Use Case, Response Wrapping a Read Model
 
-* **Status**: Accepted
-* **Date**: 2026-11-27
-* **Origin**: Compliance Store (architecture overview, "Use case conventions"; ADR 0013 on `null`)
+- **Status**: Accepted
+- **Date**: 2026-11-27
+- **Origin**: Compliance Store (architecture overview, "Use case conventions"; ADR 0013 on `null`)
 
 ---
 
@@ -49,14 +49,14 @@ live in `Application/UseCase/`. PHPStan (level max) checks the generics.
 
 ### 3. Rules
 
-* The use case builds the Value Objects from the Request's primitives (ADR 0005).
-* The Response carries a **read model** (`Domain/ReadModel/<Feature>/`), never an entity: the entity
+- The use case builds the Value Objects from the Request's primitives (ADR 0005).
+- The Response carries a **read model** (`Domain/ReadModel/<Feature>/`), never an entity: the entity
   does not leave the Application layer, so adapters cannot call its behaviour or depend on its shape.
-* A use case **never returns `null`**: a missing result is a `NotFoundException` (ADR 0009).
-* A use case without parameters still receives an empty Request (`CheckSystemStatusRequest`), so
+- A use case **never returns `null`**: a missing result is a `NotFoundException` (ADR 0009).
+- A use case without parameters still receives an empty Request (`CheckSystemStatusRequest`), so
   criteria can be added without changing its signature.
-* Each `execute()` declares its business exceptions with `@throws`: this is its error contract.
-* A use case never calls another use case; shared logic goes into an application service (ADR 0012).
+- Each `execute()` declares its business exceptions with `@throws`: this is its error contract.
+- A use case never calls another use case; shared logic goes into an application service (ADR 0012).
 
 Reference implementation: `src/Application/UseCase/System/CheckSystemStatus/`.
 
@@ -64,15 +64,15 @@ Reference implementation: `src/Application/UseCase/System/CheckSystemStatus/`.
 
 ### Positive
 
-* Every entry point looks the same: easy to read, review and generate.
-* Adapters depend on primitives and read models only.
-* The error contract of each use case is explicit and checked.
+- Every entry point looks the same: easy to read, review and generate.
+- Adapters depend on primitives and read models only.
+- The error contract of each use case is explicit and checked.
 
 ### Negative
 
-* Three classes plus a read model for each action, even trivial ones.
+- Three classes plus a read model for each action, even trivial ones.
 
 ## Changes from the original
 
-* The parameter of `UseCaseInterface::execute()` is named `$request` (it was named after one specific
+- The parameter of `UseCaseInterface::execute()` is named `$request` (it was named after one specific
   use case).

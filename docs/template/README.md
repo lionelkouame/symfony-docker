@@ -20,21 +20,21 @@ Ce template ajoute la couche manquante : une application **déjà installée et 
 
 ## Ce que le template ajoute
 
-| Ajout | Où |
-| ----- | -- |
-| Application Symfony installée (API Platform, Doctrine ORM + PostgreSQL, Workflow, Uid, Validator) | `composer.json`, `composer.lock`, `config/` |
-| Briques de base du Domain : catégories d'exceptions, identifiants, événements, ports | `src/Domain/` |
-| Contrat des use cases + use case de référence `CheckSystemStatus` | `src/Application/UseCase/` |
-| Adapters : événements Symfony, UUID v7, transaction Doctrine, workflow Symfony | `src/Infrastructure/` |
-| Endpoint `GET /api/v1/health` qui traverse toutes les couches | `src/Infrastructure/Presentation/ApiPlatform/V1/` |
-| Tests unitaires, d'architecture, d'intégration et API | `tests/` |
-| Vérification de la règle de dépendance | `deptrac.yaml` |
-| Analyse statique niveau max avec exceptions métier vérifiées | `phpstan.neon` |
-| Commandes du quotidien et gate qualité | `Makefile`, `.githooks/pre-commit` |
-| CI : health check, Deptrac, PHPStan, migrations, PHPUnit, validation du schéma | `.github/workflows/ci.yaml` |
-| Workflow de livraison : templates d'issues et de PR, labels as code | `.github/` |
-| Consignes pour les agents IA (Claude Code, OpenCode...) | `AGENTS.md`, `CLAUDE.md` |
-| Documentation et ADR | `docs/architecture/`, `docs/template/` |
+| Ajout                                                                                             | Où                                                |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| Application Symfony installée (API Platform, Doctrine ORM + PostgreSQL, Workflow, Uid, Validator) | `composer.json`, `composer.lock`, `config/`       |
+| Briques de base du Domain : catégories d'exceptions, identifiants, événements, ports              | `src/Domain/`                                     |
+| Contrat des use cases + use case de référence `CheckSystemStatus`                                 | `src/Application/UseCase/`                        |
+| Adapters : événements Symfony, UUID v7, transaction Doctrine, workflow Symfony                    | `src/Infrastructure/`                             |
+| Endpoint `GET /api/v1/health` qui traverse toutes les couches                                     | `src/Infrastructure/Presentation/ApiPlatform/V1/` |
+| Tests unitaires, d'architecture, d'intégration et API                                             | `tests/`                                          |
+| Vérification de la règle de dépendance                                                            | `deptrac.yaml`                                    |
+| Analyse statique niveau max avec exceptions métier vérifiées                                      | `phpstan.neon`                                    |
+| Commandes du quotidien et gate qualité                                                            | `Makefile`, `.githooks/pre-commit`                |
+| CI : health check, Deptrac, PHPStan, migrations, PHPUnit, validation du schéma                    | `.github/workflows/ci.yaml`                       |
+| Workflow de livraison : templates d'issues et de PR, labels as code                               | `.github/`                                        |
+| Consignes pour les agents IA (Claude Code, OpenCode...)                                           | `AGENTS.md`, `CLAUDE.md`                          |
+| Documentation et ADR                                                                              | `docs/architecture/`, `docs/template/`            |
 
 La documentation d'origine de Dunglas reste à sa place, dans `docs/*.md` (voir l'[index](../README.md)).
 
@@ -57,17 +57,17 @@ La documentation d'origine de Dunglas reste à sa place, dans `docs/*.md` (voir 
 
 > **Personnaliser par ajout, pas par modification.**
 
-* Tout ce qui est propre au template vit dans des **fichiers que l'upstream n'a pas** : git ne peut
+- Tout ce qui est propre au template vit dans des **fichiers que l'upstream n'a pas** : Git ne peut
   pas y produire de conflit.
-* Les fichiers de Dunglas restent intacts, sauf une courte liste de modifications confinées aux
-  points d'extension prévus (blocs de recipes, étapes commentées de la CI, bloc balisé du README).
-* Cette liste est tenue à jour dans [updating.md](updating.md), qui décrit aussi les deux flux de
+- Les fichiers de Dunglas restent intacts, sauf une courte liste de modifications confinées aux
+  points d'extension prévus (blocs de recipes, étapes commentées de la CI, bloc balisé du `README.md`).
+- Cette liste est tenue à jour dans [updating.md](updating.md), qui décrit aussi les deux flux de
   mise à jour : Dunglas → template, et template → projets.
 
 La décision complète est dans l'[ADR 0001](../architecture/adr/0001-template-built-on-dunglas-symfony-docker.md).
 
 ## Aller plus loin
 
-* [Démarrer un nouveau projet](new-project.md)
-* [Mettre à jour le template et les projets](updating.md)
-* [Guide d'architecture](../architecture/overview.md)
+- [Démarrer un nouveau projet](new-project.md)
+- [Mettre à jour le template et les projets](updating.md)
+- [Guide d'architecture](../architecture/overview.md)

@@ -7,7 +7,7 @@ deptrac:
   paths:
     - ./src
   exclude_files:
-    - '#.*/vendor/.*#'
+    - "#.*/vendor/.*#"
 
   layers:
     - name: Domain

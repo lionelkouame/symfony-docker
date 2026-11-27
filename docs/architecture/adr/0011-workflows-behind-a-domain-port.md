@@ -1,8 +1,8 @@
 # ADR 0011: Workflows Declared in Configuration, Driven Through a Domain Port
 
-* **Status**: Accepted
-* **Date**: 2026-11-27
-* **Origin**: Compliance Store ADR 0014
+- **Status**: Accepted
+- **Date**: 2026-11-27
+- **Origin**: Compliance Store ADR 0014
 
 ---
 
@@ -33,10 +33,10 @@ depend on Symfony.
 
 ### Positive
 
-* Lifecycles are declarative and can be dumped as diagrams (`bin/console workflow:dump`).
-* The adapter is unit-tested with an in-memory state machine (`SymfonyWorkflowEngineTest`).
+- Lifecycles are declarative and can be dumped as diagrams (`bin/console workflow:dump`).
+- The adapter is unit-tested with an in-memory state machine (`SymfonyWorkflowEngineTest`).
 
 ### Negative
 
-* Workflow and transition names are strings shared between configuration and code.
-* Simple lifecycles may stay hand-written in the entity; choose case by case.
+- Workflow and transition names are strings shared between configuration and code.
+- Simple lifecycles may stay hand-written in the entity; choose case by case.

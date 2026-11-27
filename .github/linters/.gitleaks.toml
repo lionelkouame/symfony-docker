@@ -1,0 +1,9 @@
+# Gitleaks configuration (used by super-linter).
+[extend]
+useDefault = true
+
+# .env.dev and .env.test hold development-only defaults committed by the Symfony
+# recipes. Production secrets never go into a committed file (see .env).
+[[allowlists]]
+description = "Development and test defaults of the Symfony recipes"
+paths = ['''(^|/)\.env\.(dev|test)$''']

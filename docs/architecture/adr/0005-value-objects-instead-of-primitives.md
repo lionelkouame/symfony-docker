@@ -1,8 +1,8 @@
 # ADR 0005: Value Objects Instead of Primitives and Native Arrays in the Domain
 
-* **Status**: Accepted
-* **Date**: 2026-11-27
-* **Origin**: Compliance Store ADR 0004
+- **Status**: Accepted
+- **Date**: 2026-11-27
+- **Origin**: Compliance Store ADR 0004
 
 ---
 
@@ -10,7 +10,7 @@
 
 Entity properties typed `string` or `array` let invalid values flow through the Domain (an empty
 code, a malformed email), force validation to be repeated at every entry point, and document
-neither the format nor the business meaning of the value (*primitive obsession*).
+neither the format nor the business meaning of the value (_primitive obsession_).
 
 ## Decision
 
@@ -44,14 +44,14 @@ PlaceOrderRequest (primitives) ──► PlaceOrderUseCase builds OrderId, Quant
 
 ### Positive
 
-* Each rule is validated once, in one constructor; an invalid state is unrepresentable.
-* Signatures document the business (`Quantity $quantity` says more than `int $quantity`).
+- Each rule is validated once, in one constructor; an invalid state is unrepresentable.
+- Signatures document the business (`Quantity $quantity` says more than `int $quantity`).
 
 ### Negative
 
-* More classes; one Doctrine type per Value Object stored in a column.
+- More classes; one Doctrine type per Value Object stored in a column.
 
 ## Changes from the original
 
-* Use case inputs are called **Requests** (the original still said `Command`), and the examples no
+- Use case inputs are called **Requests** (the original still said `Command`), and the examples no
   longer reference a feature removed from the original project.

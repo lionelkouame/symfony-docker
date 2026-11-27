@@ -27,16 +27,16 @@ HTTP3_PORT=8443
 
 ## 3. Personnaliser
 
-| Quoi | Où |
-| ---- | -- |
-| Nom et description du paquet | `composer.json` (`name`, `description`) |
-| Titre et description de l'API | `config/packages/api_platform.yaml` |
-| Version exposée par le health check | variable `APP_VERSION` (défaut dans `config/services.yaml`) |
-| Labels métier (`domain: <feature>`) | `.github/labels.yml` |
-| Présentation du projet | `README.md` : remplacer le contenu de Dunglas par celui du projet |
-| Historique | `CHANGELOG.md` : repartir d'une section `[Unreleased]` vide |
+| Quoi                                | Où                                                                |
+| ----------------------------------- | ----------------------------------------------------------------- |
+| Nom et description du paquet        | `composer.json` (`name`, `description`)                           |
+| Titre et description de l'API       | `config/packages/api_platform.yaml`                               |
+| Version exposée par le health check | variable `APP_VERSION` (défaut dans `config/services.yaml`)       |
+| Labels métier (`domain: <feature>`) | `.github/labels.yml`                                              |
+| Présentation du projet              | `README.md` : remplacer le contenu de Dunglas par celui du projet |
+| Historique                          | `CHANGELOG.md` : repartir d'une section `[Unreleased]` vide       |
 
-Dans un projet, le README n'a plus besoin de rester proche de celui de Dunglas : il présente le
+Dans un projet, le `README.md` n'a plus besoin de rester proche de celui de Dunglas : il présente le
 projet et pointe vers `docs/`.
 
 ## 4. Garder le health check

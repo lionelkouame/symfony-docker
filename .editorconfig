@@ -23,3 +23,6 @@ indent_style = unset
 
 [{Makefile,.githooks/*}]
 indent_style = tab
+
+[{.github/**/*.yml,deptrac.yaml}]
+indent_size = 2

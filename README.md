@@ -1,6 +1,7 @@
 # Symfony Docker
 
 <!-- ###> clean-architecture ### -->
+
 > [!NOTE]
 >
 > **Clean Architecture edition.** This repository extends `dunglas/symfony-docker` with an installed
@@ -9,6 +10,7 @@
 > `GET /api/v1/health`. Start with [the documentation index](docs/README.md):
 > [the template approach](docs/template/README.md), [the architecture guide](docs/architecture/overview.md)
 > and [the ADRs](docs/architecture/adr/README.md). Quick start: `make build up health test`.
+
 <!-- ###< clean-architecture ### -->
 
 A [Docker](https://www.docker.com/)-based installer and runtime for the [Symfony](https://symfony.com) web framework,

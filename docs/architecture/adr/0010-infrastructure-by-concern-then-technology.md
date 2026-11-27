@@ -1,8 +1,8 @@
 # ADR 0010: Ports and Adapters Organised by Concern, Then by Technology
 
-* **Status**: Accepted
-* **Date**: 2026-11-27
-* **Origin**: Compliance Store ADR 0008 and ADR 0015
+- **Status**: Accepted
+- **Date**: 2026-11-27
+- **Origin**: Compliance Store ADR 0008 and ADR 0015
 
 ---
 
@@ -20,14 +20,14 @@ Infrastructure folders named after a pattern (`Gateway/`, `Adapter/`) or a catch
 Infrastructure/<Concern>/<Technology>/
 ```
 
-* **Concern first**, matching a Domain port: `Event`, `Identity`, `Persistence`, `Storage`,
+- **Concern first**, matching a Domain port: `Event`, `Identity`, `Persistence`, `Storage`,
   `Encryption`, `Notification`, `Workflow`, `Validation`, and `Presentation` for entry points.
-* **Technology second**: `Event/Symfony`, `Identity/SymfonyUid`, `Persistence/Doctrine`,
+- **Technology second**: `Event/Symfony`, `Identity/SymfonyUid`, `Persistence/Doctrine`,
   `Presentation/ApiPlatform`, `Storage/Flysystem`... A replacement is a sibling folder
   (`Storage/Local`), the existing one is untouched.
-* Types tied to one technology (a Flysystem object key, a Doctrine type) live next to their adapter,
+- Types tied to one technology (a Flysystem object key, a Doctrine type) live next to their adapter,
   never in the Domain.
-* No pattern-named (`Gateway`, `Adapter`) or catch-all (`Service`, `Utils`, `Helper`, `Manager`) folder.
+- No pattern-named (`Gateway`, `Adapter`) or catch-all (`Service`, `Utils`, `Helper`, `Manager`) folder.
 
 ### 2. Ports follow the same concerns
 
@@ -64,18 +64,18 @@ Infrastructure/
 
 ### Positive
 
-* The tree reads as the list of ports and their implementations.
-* Swapping a technology is local to one folder and one line of configuration.
+- The tree reads as the list of ports and their implementations.
+- Swapping a technology is local to one folder and one line of configuration.
 
 ### Negative
 
-* One more folder level for concerns with a single implementation.
+- One more folder level for concerns with a single implementation.
 
 ## Changes from the original
 
-* `Domain/Port/Service/` (a catch-all, the very thing the original ADR forbade in Infrastructure) is
+- `Domain/Port/Service/` (a catch-all, the very thing the original ADR forbade in Infrastructure) is
   replaced by `Domain/Port/Identity/`; `GeneratorInterface` becomes `IdGeneratorInterface`.
-* The event port is suffixed `Interface` like the others (`DomainEventPublisherInterface`) and its
+- The event port is suffixed `Interface` like the others (`DomainEventPublisherInterface`) and its
   adapter is named after it (`SymfonyDomainEventPublisher`).
-* Listeners live under `<Concern>/<Technology>/Listener/<Feature>/` for both events and workflows (the
+- Listeners live under `<Concern>/<Technology>/Listener/<Feature>/` for both events and workflows (the
   original documents disagreed on the workflow listener path).

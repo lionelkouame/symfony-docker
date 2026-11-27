@@ -1,8 +1,8 @@
 # ADR 0016: Quality Gate — PHPStan Max, Deptrac, PHPUnit and Architecture Tests
 
-* **Status**: Accepted
-* **Date**: 2026-11-27
-* **Origin**: Compliance Store (`phpstan.neon`, `deptrac.yaml`, `Makefile`, `.githooks/pre-commit`, CI)
+- **Status**: Accepted
+- **Date**: 2026-11-27
+- **Origin**: Compliance Store (`phpstan.neon`, `deptrac.yaml`, `Makefile`, `.githooks/pre-commit`, CI)
 
 ---
 
@@ -15,12 +15,12 @@ locally before the commit and in the CI before the merge.
 
 ### 1. Tools
 
-| Tool       | Configuration        | Checks                                                                    |
-| ---------- | -------------------- | ------------------------------------------------------------------------- |
-| PHPStan    | `phpstan.neon`       | Level **max** on `src/` and `tests/`, generics, checked business exceptions |
-| Deptrac    | `deptrac.yaml`       | Dependency rule between layers (ADR 0002, ADR 0012)                       |
-| PHPUnit    | `phpunit.dist.xml`   | Fails on deprecations, notices and warnings                               |
-| Doctrine   | —                    | `doctrine:schema:validate` after the migrations (ADR 0015)                |
+| Tool     | Configuration      | Checks                                                                      |
+| -------- | ------------------ | --------------------------------------------------------------------------- |
+| PHPStan  | `phpstan.neon`     | Level **max** on `src/` and `tests/`, generics, checked business exceptions |
+| Deptrac  | `deptrac.yaml`     | Dependency rule between layers (ADR 0002, ADR 0012)                         |
+| PHPUnit  | `phpunit.dist.xml` | Fails on deprecations, notices and warnings                                 |
+| Doctrine | —                  | `doctrine:schema:validate` after the migrations (ADR 0015)                  |
 
 ### 2. Test pyramid, mirroring `src/`
 
@@ -41,18 +41,18 @@ Every feature has unit tests for its rules and API tests for each status code it
 
 ### 3. One command, three places
 
-* `make test` = Deptrac + PHPStan + rebuild of the test database + PHPUnit.
-* `.githooks/pre-commit` runs `make test` (enable once with `make setup-hooks`).
-* The CI runs the same steps in the Docker image, plus `curl /api/v1/health` and the upstream lint job.
+- `make test` = Deptrac + PHPStan + rebuild of the test database + PHPUnit.
+- `.githooks/pre-commit` runs `make test` (enable once with `make setup-hooks`).
+- The CI runs the same steps in the Docker image, plus `curl /api/v1/health` and the upstream lint job.
 
 ## Consequences
 
 ### Positive
 
-* A convention broken anywhere fails fast with a precise message.
-* The CI and the developer machine run the same checks in the same image.
+- A convention broken anywhere fails fast with a precise message.
+- The CI and the developer machine run the same checks in the same image.
 
 ### Negative
 
-* The pre-commit hook takes a few seconds; `git commit --no-verify` exists for emergencies and the CI
+- The pre-commit hook takes a few seconds; `git commit --no-verify` exists for emergencies and the CI
   still catches what it skipped.

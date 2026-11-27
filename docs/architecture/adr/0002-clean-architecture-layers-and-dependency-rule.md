@@ -1,8 +1,8 @@
 # ADR 0002: Clean Architecture Layers and the Dependency Rule, Enforced by Deptrac
 
-* **Status**: Accepted
-* **Date**: 2026-11-27
-* **Origin**: Compliance Store (architecture overview, `deptrac.yaml`)
+- **Status**: Accepted
+- **Date**: 2026-11-27
+- **Origin**: Compliance Store (architecture overview, `deptrac.yaml`)
 
 ---
 
@@ -33,12 +33,12 @@ e.g. `Order`, `Customer`).
  Infrastructure ──► Application ──► Domain
 ```
 
-* `Domain` depends on **nothing** but PHP: no Symfony, Doctrine, API Platform, PSR or utility
+- `Domain` depends on **nothing** but PHP: no Symfony, Doctrine, API Platform, PSR or utility
   library.
-* `Application` depends on `Domain` only. Inside it, `UseCase` may call `ApplicationService`, never
+- `Application` depends on `Domain` only. Inside it, `UseCase` may call `ApplicationService`, never
   the reverse (ADR 0012).
-* `Infrastructure` depends on `Domain`, on the `UseCase` part of `Application` and on vendors.
-* The Domain talks to the outside world through **ports** (`Domain/Port/<Concern>/*Interface`) that
+- `Infrastructure` depends on `Domain`, on the `UseCase` part of `Application` and on vendors.
+- The Domain talks to the outside world through **ports** (`Domain/Port/<Concern>/*Interface`) that
   Infrastructure implements (**adapters**). Ports are bound to adapters in `config/services.yaml`,
   the single composition root.
 
@@ -52,12 +52,12 @@ listed explicitly. `make deptrac` runs in `make test`, in the pre-commit hook an
 
 ### Positive
 
-* The Domain and the use cases are unit-tested without any framework (fakes of the ports).
-* A framework or library upgrade is confined to `Infrastructure/`.
-* A violation fails the build with the exact offending dependency.
+- The Domain and the use cases are unit-tested without any framework (fakes of the ports).
+- A framework or library upgrade is confined to `Infrastructure/`.
+- A violation fails the build with the exact offending dependency.
 
 ### Negative
 
-* More classes than a "Symfony standard" application (ports, adapters, DTOs, mappers).
-* A new vendor namespace must be added to the `Vendor` layer, otherwise Deptrac reports it as
+- More classes than a "Symfony standard" application (ports, adapters, DTOs, mappers).
+- A new vendor namespace must be added to the `Vendor` layer, otherwise Deptrac reports it as
   uncovered.

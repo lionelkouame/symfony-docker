@@ -1,15 +1,15 @@
 # ADR 0013: Domain Events Published Through a Domain Port
 
-* **Status**: Accepted
-* **Date**: 2026-11-27
-* **Origin**: Compliance Store (`DomainEvent`, `DomainEventPublisher`, Symfony listeners); no ADR existed
+- **Status**: Accepted
+- **Date**: 2026-11-27
+- **Origin**: Compliance Store (`DomainEvent`, `DomainEventPublisher`, Symfony listeners); no ADR existed
 
 ---
 
 ## Context
 
 Reactions to a business fact (send a notification, update a projection, start a process) should not
-be hard-coded in the use case that produced the fact, and the use case must not depend on Symfony's
+be hardcoded in the use case that produced the fact, and the use case must not depend on Symfony's
 event dispatcher.
 
 ## Decision
@@ -30,15 +30,15 @@ event dispatcher.
 
 ### Positive
 
-* Producers and reactions are decoupled; reactions are added without touching the use case.
-* Use cases are unit-tested with an in-memory publisher collecting the events.
+- Producers and reactions are decoupled; reactions are added without touching the use case.
+- Use cases are unit-tested with an in-memory publisher collecting the events.
 
 ### Negative
 
-* Synchronous listeners run in the request: a slow or failing listener affects the caller until it
+- Synchronous listeners run in the request: a slow or failing listener affects the caller until it
   is moved to an asynchronous transport.
 
 ## Changes from the original
 
-* The port is named `DomainEventPublisherInterface` and its adapter `SymfonyDomainEventPublisher`
+- The port is named `DomainEventPublisherInterface` and its adapter `SymfonyDomainEventPublisher`
   (ADR 0010).

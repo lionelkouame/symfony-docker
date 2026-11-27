@@ -1,8 +1,8 @@
 # ADR 0017: Issue-Driven Delivery — Issues, Branches, Conventional Commits, Pull Requests
 
-* **Status**: Accepted
-* **Date**: 2026-11-27
-* **Origin**: Compliance Store (issue templates, labels as code, branch and commit history)
+- **Status**: Accepted
+- **Date**: 2026-11-27
+- **Origin**: Compliance Store (issue templates, labels as code, branch and commit history)
 
 ---
 
@@ -29,9 +29,9 @@ one pull request.
 
 ### Positive
 
-* Every line of code can be traced back to a reason.
-* Projects created from the template inherit the same workflow.
+- Every line of code can be traced back to a reason.
+- Projects created from the template inherit the same workflow.
 
 ### Negative
 
-* A small overhead for trivial changes.
+- A small overhead for trivial changes.

@@ -1,8 +1,8 @@
 # ADR 0008: URI Variables and Context Contract of Providers Declared with PHPDoc Shapes
 
-* **Status**: Accepted
-* **Date**: 2026-11-27
-* **Origin**: Compliance Store ADR 0007
+- **Status**: Accepted
+- **Date**: 2026-11-27
+- **Origin**: Compliance Store ADR 0007
 
 ---
 
@@ -40,15 +40,15 @@ public function provide(Operation $operation, array $uriVariables = [], array $c
 
 ### Positive
 
-* The route contract is visible on the method; PHPStan level max passes without casts.
+- The route contract is visible on the method; PHPStan level max passes without casts.
 
 ### Negative
 
-* The shape must be maintained when a route variable is renamed.
+- The shape must be maintained when a route variable is renamed.
 
 ## Changes from the original
 
-* The original example returned `null` from the use case and mapped it in the provider; this
+- The original example returned `null` from the use case and mapped it in the provider; this
   contradicted the "a use case never returns null" rule and is replaced by the exception flow.
-* The query mapping helper is renamed `buildRequestFromQuery()` (it was `buildQueryFromRequest()`):
+- The query mapping helper is renamed `buildRequestFromQuery()` (it was `buildQueryFromRequest()`):
   use case inputs are Requests, no longer CQRS Queries.

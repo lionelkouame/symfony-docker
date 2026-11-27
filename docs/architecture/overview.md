@@ -49,10 +49,10 @@ Les dossiers vides contiennent un `.gitkeep` : ils matérialisent l'emplacement 
  Infrastructure ──► Application ──► Domain
 ```
 
-* `Domain` ne dépend de **rien** d'autre que PHP.
-* `Application` dépend du `Domain`. Dans `Application`, seuls les `UseCase` appellent les `Service`.
-* `Infrastructure` dépend du `Domain`, des `UseCase` et des librairies.
-* Le Domain parle au monde extérieur par des **ports** ; l'Infrastructure fournit les **adapters** ;
+- `Domain` ne dépend de **rien** d'autre que PHP.
+- `Application` dépend du `Domain`. Dans `Application`, seuls les `UseCase` appellent les `Service`.
+- `Infrastructure` dépend du `Domain`, des `UseCase` et des librairies.
+- Le Domain parle au monde extérieur par des **ports** ; l'Infrastructure fournit les **adapters** ;
   `config/services.yaml` les relie (une seule « composition root »).
 
 Vérifiée par **Deptrac** (`make deptrac`) — [ADR 0002](adr/0002-clean-architecture-layers-and-dependency-rule.md).
@@ -85,14 +85,14 @@ Vérifiée par **Deptrac** (`make deptrac`) — [ADR 0002](adr/0002-clean-archit
 
 L'exemple complet est le health check :
 
-| Étape | Fichier |
-| ----- | ------- |
-| Resource | `Infrastructure/Presentation/ApiPlatform/V1/Resource/System/HealthCheckResource.php` |
-| Provider | `Infrastructure/Presentation/ApiPlatform/V1/State/Provider/System/HealthCheckProvider.php` |
-| Request / UseCase / Response | `Application/UseCase/System/CheckSystemStatus/` |
-| Read model | `Domain/ReadModel/System/SystemStatus.php` |
-| Output | `Infrastructure/Presentation/ApiPlatform/V1/Resource/System/HealthCheckOutput.php` |
-| Tests | `tests/Unit/Application/UseCase/System/`, `tests/Api/HealthCheckApiTest.php`, `tests/http/v1/system/health.http` |
+| Étape                        | Fichier                                                                                                          |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Resource                     | `Infrastructure/Presentation/ApiPlatform/V1/Resource/System/HealthCheckResource.php`                             |
+| Provider                     | `Infrastructure/Presentation/ApiPlatform/V1/State/Provider/System/HealthCheckProvider.php`                       |
+| Request / UseCase / Response | `Application/UseCase/System/CheckSystemStatus/`                                                                  |
+| Read model                   | `Domain/ReadModel/System/SystemStatus.php`                                                                       |
+| Output                       | `Infrastructure/Presentation/ApiPlatform/V1/Resource/System/HealthCheckOutput.php`                               |
+| Tests                        | `tests/Unit/Application/UseCase/System/`, `tests/Api/HealthCheckApiTest.php`, `tests/http/v1/system/health.http` |
 
 ---
 
@@ -100,53 +100,53 @@ L'exemple complet est le health check :
 
 ### Domain
 
-* Classes `final` (entités) ou `final readonly` (Value Objects, read models, événements).
-* Les entités se construisent par des **constructeurs nommés** (`Order::place(...)`) qui garantissent
+- Classes `final` (entités) ou `final readonly` (Value Objects, read models, événements).
+- Les entités se construisent par des **constructeurs nommés** (`Order::place(...)`) qui garantissent
   leurs invariants ; pas de setter public sans règle métier.
-* Chaque propriété scalaire métier est un **Value Object** ; une liste est une collection
+- Chaque propriété scalaire métier est un **Value Object** ; une liste est une collection
   (`IteratorAggregate` + `Countable`) — [ADR 0005](adr/0005-value-objects-instead-of-primitives.md).
-* Un Value Object n'est jamais nul ; l'optionalité est portée par l'entité (`?PhoneNumber`) —
+- Un Value Object n'est jamais nul ; l'optionalité est portée par l'entité (`?PhoneNumber`) —
   [ADR 0006](adr/0006-strict-non-nullable-value-objects.md).
-* Les identifiants utilisent `IdentifierTrait` : `OrderId::make($value, $validator)`.
-* Les Value Objects lèvent `InvalidValueException` ; jamais l'exception SPL d'argument invalide.
+- Les identifiants utilisent `IdentifierTrait` : `OrderId::make($value, $validator)`.
+- Les Value Objects lèvent `InvalidValueException` ; jamais l'exception SPL d'argument invalide.
 
 ### Application
 
-* Un use case par action, trois classes, contrat générique `UseCaseInterface<Request, Response>` —
+- Un use case par action, trois classes, contrat générique `UseCaseInterface<Request, Response>` —
   [ADR 0003](adr/0003-use-case-contract.md).
-* Un use case ne renvoie jamais `null` et déclare ses exceptions métier avec `@throws`.
-* Plusieurs écritures → `TransactionInterface::run()`, sans appel réseau à l'intérieur —
+- Un use case ne renvoie jamais `null` et déclare ses exceptions métier avec `@throws`.
+- Plusieurs écritures → `TransactionInterface::run()`, sans appel réseau à l'intérieur —
   [ADR 0014](adr/0014-transactions-through-a-domain-port.md).
-* Publication des événements après la persistance, via `DomainEventPublisherInterface` —
+- Publication des événements après la persistance, via `DomainEventPublisherInterface` —
   [ADR 0013](adr/0013-domain-events-through-a-port.md).
 
 ### Infrastructure
 
-* `<Responsabilité>/<Technologie>/`, jamais de dossier `Service`, `Gateway`, `Utils`, `Helper` —
+- `<Responsabilité>/<Technologie>/`, jamais de dossier `Service`, `Gateway`, `Utils`, `Helper` —
   [ADR 0010](adr/0010-infrastructure-by-concern-then-technology.md).
-* Un adapter s'appelle `<Technologie><Port>` (`DoctrineTransaction`, `SymfonyUuidGenerator`).
-* Les entités sont mappées en **XML** (`Persistence/Doctrine/Mapping/<Entity>.orm.xml`), un type DBAL
+- Un adapter s'appelle `<Technologie><Port>` (`DoctrineTransaction`, `SymfonyUuidGenerator`).
+- Les entités sont mappées en **XML** (`Persistence/Doctrine/Mapping/<Entity>.orm.xml`), un type DBAL
   par Value Object stocké, l'unicité garantie par une contrainte en base et traduite en
   `AlreadyExistException` — [ADR 0015](adr/0015-persistence-doctrine-xml-mapping.md).
-* API Platform : une Resource par fonctionnalité qui ne fait que déclarer, un Input par écriture,
+- API Platform : une Resource par fonctionnalité qui ne fait que déclarer, un Input par écriture,
   un Output par représentation, `$uriVariables` décrits en PHPDoc shape —
   [ADR 0004](adr/0004-api-platform-confined-to-presentation.md),
   [ADR 0008](adr/0008-uri-variables-contract-in-providers.md).
 
 ### Nommage
 
-| Élément | Convention | Exemple |
-| ------- | ---------- | ------- |
-| Use case | `<Verbe><Nom>UseCase` | `PlaceOrderUseCase` |
-| Entrée / sortie de use case | `<Action>Request` / `<Action>Response` | `PlaceOrderRequest` |
-| Read model | nom métier, pas de suffixe technique | `PlacedOrder`, `OrderDetails` |
-| Port | `<Rôle>Interface` | `OrderRepositoryInterface` |
-| Adapter | `<Technologie><Rôle>` | `DoctrineOrderRepository` |
-| Événement | participe passé | `OrderPlaced` |
-| Exception | fait métier + catégorie | `OrderNotFoundException::withId()` |
-| DTO HTTP | `<Action>Input` / `<Action>Output` | `PlaceOrderInput` |
-| Provider / Processor | `<Action>Provider` / `<Action>Processor` | `GetOrderProvider` |
-| Service applicatif | ce qu'il fait, jamais `XxxService` | `InvoiceNumberer` |
+| Élément                     | Convention                               | Exemple                            |
+| --------------------------- | ---------------------------------------- | ---------------------------------- |
+| Use case                    | `<Verbe><Nom>UseCase`                    | `PlaceOrderUseCase`                |
+| Entrée / sortie de use case | `<Action>Request` / `<Action>Response`   | `PlaceOrderRequest`                |
+| Read model                  | nom métier, pas de suffixe technique     | `PlacedOrder`, `OrderDetails`      |
+| Port                        | `<Rôle>Interface`                        | `OrderRepositoryInterface`         |
+| Adapter                     | `<Technologie><Rôle>`                    | `DoctrineOrderRepository`          |
+| Événement                   | participe passé                          | `OrderPlaced`                      |
+| Exception                   | fait métier + catégorie                  | `OrderNotFoundException::withId()` |
+| DTO HTTP                    | `<Action>Input` / `<Action>Output`       | `PlaceOrderInput`                  |
+| Provider / Processor        | `<Action>Provider` / `<Action>Processor` | `GetOrderProvider`                 |
+| Service applicatif          | ce qu'il fait, jamais `XxxService`       | `InvoiceNumberer`                  |
 
 ---
 
@@ -156,15 +156,15 @@ Les erreurs métier sont **classées par catégorie** dans le Domain et **tradui
 fois**, par configuration (`config/packages/api_platform.yaml`) —
 [ADR 0009](adr/0009-business-exceptions-translated-once.md).
 
-| Catégorie (`Domain/Exception/`) | Statut HTTP | Exemple |
-| ------------------------------- | ----------- | ------- |
-| `NotFoundException`             | 404         | `OrderNotFoundException` |
-| `AlreadyExistException`         | 409         | `OrderReferenceAlreadyExistsException` |
+| Catégorie (`Domain/Exception/`) | Statut HTTP | Exemple                                                  |
+| ------------------------------- | ----------- | -------------------------------------------------------- |
+| `NotFoundException`             | 404         | `OrderNotFoundException`                                 |
+| `AlreadyExistException`         | 409         | `OrderReferenceAlreadyExistsException`                   |
 | `InvalidDataException`          | 422         | `InvalidValueException`, `TransitionNotAllowedException` |
 
-* Une nouvelle exception métier hérite de la bonne catégorie : aucun changement côté HTTP.
-* Les adapters ne contiennent **aucun `try/catch`** d'exception métier.
-* Les messages partent au client : **jamais** de donnée personnelle dedans.
+- Une nouvelle exception métier hérite de la bonne catégorie : aucun changement côté HTTP.
+- Les adapters ne contiennent **aucun `try/catch`** d'exception métier.
+- Les messages partent au client : **jamais** de donnée personnelle dedans.
 
 ---
 
@@ -191,12 +191,12 @@ Exemple : « passer une commande » (`POST /api/v1/orders`).
 
 ## ✅ Qualité
 
-| Outil | Commande | Vérifie |
-| ----- | -------- | ------- |
-| Deptrac | `make deptrac` | Règle de dépendance entre couches |
-| PHPStan | `make phpstan` | Niveau max sur `src/` et `tests/`, génériques, exceptions métier déclarées |
-| PHPUnit | `make phpunit` | Tests unitaires, d'architecture, d'intégration et API |
-| Doctrine | `make test-db` | Base de test reconstruite par les migrations + `doctrine:schema:validate` |
-| Tout | `make test` | Les quatre ci-dessus — lancé aussi par le hook pre-commit et la CI |
+| Outil    | Commande       | Vérifie                                                                    |
+| -------- | -------------- | -------------------------------------------------------------------------- |
+| Deptrac  | `make deptrac` | Règle de dépendance entre couches                                          |
+| PHPStan  | `make phpstan` | Niveau max sur `src/` et `tests/`, génériques, exceptions métier déclarées |
+| PHPUnit  | `make phpunit` | Tests unitaires, d'architecture, d'intégration et API                      |
+| Doctrine | `make test-db` | Base de test reconstruite par les migrations + `doctrine:schema:validate`  |
+| Tout     | `make test`    | Les quatre ci-dessus — lancé aussi par le hook pre-commit et la CI         |
 
 Détails : [ADR 0016](adr/0016-quality-gate.md).

@@ -1,8 +1,8 @@
 # ADR 0007: Declarative Input Validation and the Domain Double Lock
 
-* **Status**: Accepted
-* **Date**: 2026-11-27
-* **Origin**: Compliance Store ADR 0005
+- **Status**: Accepted
+- **Date**: 2026-11-27
+- **Origin**: Compliance Store ADR 0005
 
 ---
 
@@ -43,14 +43,14 @@ Uniqueness is guaranteed a third time by a database constraint (ADR 0015).
 
 ### Positive
 
-* Precise 422 responses for HTTP clients, full protection for every other channel.
-* The Domain stays framework-free.
+- Precise 422 responses for HTTP clients, full protection for every other channel.
+- The Domain stays framework-free.
 
 ### Negative
 
-* A rule can be expressed twice (constraint + use case guard): both must be kept in sync, and both
+- A rule can be expressed twice (constraint + use case guard): both must be kept in sync, and both
   are tested.
 
 ## Changes from the original
 
-* Custom constraints live in `Infrastructure/Validation/Symfony/` (concern, then technology).
+- Custom constraints live in `Infrastructure/Validation/Symfony/` (concern, then technology).

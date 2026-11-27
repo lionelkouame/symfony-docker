@@ -1,8 +1,8 @@
 # ADR 0015: Persistence — Doctrine XML Mapping, Custom Types, Uniqueness Guaranteed by the Database
 
-* **Status**: Accepted
-* **Date**: 2026-11-27
-* **Origin**: Compliance Store ADR 0004 (custom types), ADR 0013 §4bis (unique constraints), issue on fixtures
+- **Status**: Accepted
+- **Date**: 2026-11-27
+- **Origin**: Compliance Store ADR 0004 (custom types), ADR 0013 §4bis (unique constraints), issue on fixtures
 
 ---
 
@@ -49,9 +49,9 @@ public function add(Order $order): void
 
 ### Positive
 
-* Entities stay pure PHP; the database protects the invariants the application checks.
+- Entities stay pure PHP; the database protects the invariants the application checks.
 
 ### Negative
 
-* XML mapping is more verbose than attributes and is not refactored automatically by the IDE.
-* One custom type per stored Value Object.
+- XML mapping is more verbose than attributes and is not refactored automatically by the IDE.
+- One custom type per stored Value Object.

@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD041 -->
+
 ## Summary
 
 <!-- What does this PR do, and why? -->
@@ -7,7 +9,7 @@ Closes #
 ## Type of change
 
 - [ ] User Story
-- [ ] Bug fix
+- [ ] Bugfix
 - [ ] Tech / refactor
 - [ ] Architecture decision (ADR added or updated)
 - [ ] Documentation
