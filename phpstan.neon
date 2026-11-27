@@ -1,0 +1,34 @@
+includes:
+    - vendor/phpstan/phpstan-symfony/extension.neon
+    - vendor/phpstan/phpstan-symfony/rules.neon
+    - vendor/phpstan/phpstan-doctrine/extension.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-phpunit/rules.neon
+
+parameters:
+    level: max
+    paths:
+        - src
+        - tests
+    excludePaths:
+        - tests/bootstrap.php
+    tmpDir: var/cache/phpstan
+    symfony:
+        containerXmlPath: var/cache/dev/App_KernelDevDebugContainer.xml
+    # Business exceptions are checked (ADR 0009): a method that can throw one
+    # must declare it with @throws, so each use case documents its error contract.
+    exceptions:
+        check:
+            missingCheckedExceptionInThrows: true
+            tooWideThrowType: true
+        checkedExceptionClasses:
+            - App\Domain\Exception\DomainException
+    ignoreErrors:
+        # Doctrine types rebuild Value Objects from rows that were valid when
+        # written: an invalid row is data corruption (a 500), not a client error.
+        -
+            identifier: missingType.checkedException
+            reportUnmatched: false
+            paths:
+                - src/Infrastructure/Persistence/Doctrine/Type/*
+                - tests/*
