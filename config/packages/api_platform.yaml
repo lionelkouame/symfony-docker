@@ -1,0 +1,29 @@
+api_platform:
+    title: Symfony Clean Architecture API
+    version: 0.1.0
+    description: API built on the Clean Architecture template (dunglas/symfony-docker + conventions).
+    formats:
+        jsonld: ['application/ld+json']
+        json: ['application/json']
+    # Resources only live in the Presentation layer, grouped by API version (ADR 0004).
+    # Add the V2 directory here when a second version is introduced.
+    mapping:
+        paths:
+            - '%kernel.project_dir%/src/Infrastructure/Presentation/ApiPlatform/V1/Resource'
+    # Business exceptions (src/Domain/Exception) are translated into HTTP once,
+    # here, by category: processors and providers never catch them (ADR 0009).
+    # Setting this key replaces API Platform's defaults, hence the first four entries.
+    exception_to_status:
+        Symfony\Component\Serializer\Exception\ExceptionInterface: 400
+        ApiPlatform\Metadata\Exception\InvalidArgumentException: 400
+        Doctrine\ORM\OptimisticLockException: 409
+        # Repositories translate unique violations into an AlreadyExistException (409, ADR 0015);
+        # this default only catches the ones that slipped through.
+        Doctrine\DBAL\Exception\UniqueConstraintViolationException: 422
+        App\Domain\Exception\NotFoundException: 404
+        App\Domain\Exception\AlreadyExistException: 409
+        App\Domain\Exception\InvalidDataException: 422
+    defaults:
+        stateless: true
+        cache_headers:
+            vary: ['Content-Type', 'Authorization', 'Origin']

@@ -1,0 +1,53 @@
+doctrine:
+    dbal:
+        url: '%env(resolve:DATABASE_URL)%'
+
+        # IMPORTANT: You MUST configure your server version,
+        # either here or in the DATABASE_URL env var (see .env file)
+        #server_version: '16'
+
+        profiling_collect_backtrace: '%kernel.debug%'
+
+        # One custom type per Value Object stored in a column (ADR 0015), e.g.:
+        # types:
+        #     order_id: App\Infrastructure\Persistence\Doctrine\Type\OrderIdType
+    orm:
+        validate_xml_mapping: true
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        identity_generation_preferences:
+            Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
+        auto_mapping: true
+        # Domain entities stay pure PHP: they are mapped in XML from the
+        # Infrastructure layer (ADR 0015). Custom DBAL types for Value Objects
+        # are declared under dbal.types and live in Persistence/Doctrine/Type/.
+        mappings:
+            App:
+                type: xml
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: 'App\Domain\Entity'
+                alias: App
+
+when@test:
+    doctrine:
+        dbal:
+            # "TEST_TOKEN" is typically set by ParaTest
+            dbname_suffix: '_test%env(default::TEST_TOKEN)%'
+
+when@prod:
+    doctrine:
+        orm:
+            query_cache_driver:
+                type: pool
+                pool: doctrine.system_cache_pool
+            result_cache_driver:
+                type: pool
+                pool: doctrine.result_cache_pool
+
+    framework:
+        cache:
+            pools:
+                doctrine.result_cache_pool:
+                    adapter: cache.app
+                doctrine.system_cache_pool:
+                    adapter: cache.system
