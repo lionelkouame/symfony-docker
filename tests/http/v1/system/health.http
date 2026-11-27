@@ -1,0 +1,14 @@
+# Manual checks with the JetBrains / VS Code REST client.
+# Environments: tests/http/http-client.env.json
+
+# @name checkSystemStatus
+### Health check (V1)
+GET {{apiUrl}}/health
+Accept: application/json
+
+###
+
+# @name openApiSpec
+### OpenAPI specification
+GET {{baseUrl}}/api/docs.jsonopenapi
+Accept: application/vnd.openapi+json
