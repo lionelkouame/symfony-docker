@@ -1,0 +1,29 @@
+name: "🛠️ Tech task"
+description: Refactoring, tooling, dependency upgrade, architecture decision — no functional change
+title: "[TECH] "
+labels: ["type: chore"]
+body:
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: What is the current situation, and why does it need to change?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: What will be done? Mention the ADR to write or update, if any.
+    validations:
+      required: true
+
+  - type: textarea
+    id: done
+    attributes:
+      label: Done when
+      placeholder: |
+        - [ ] ...
+    validations:
+      required: true

@@ -1,0 +1,49 @@
+# yaml-language-server: $schema=../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+# See also https://symfony.com/doc/current/service_container/import.html
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+parameters:
+    # Application version reported by GET /api/v1/health; override with APP_VERSION.
+    env(APP_VERSION): '0.1.0'
+    app.version: '%env(APP_VERSION)%'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+    # —— Composition root: every Domain port is bound to its adapter here (ADR 0010) ——
+    # Swapping a technology = adding a sibling Infrastructure/<Concern>/<Technology>/
+    # folder and changing one line below.
+    App\Domain\Port\Event\DomainEventPublisherInterface: '@App\Infrastructure\Event\Symfony\SymfonyDomainEventPublisher'
+    App\Domain\Port\Identity\IdGeneratorInterface: '@App\Infrastructure\Identity\SymfonyUid\SymfonyUuidGenerator'
+    App\Domain\Port\Identity\IdValidatorInterface: '@App\Infrastructure\Identity\SymfonyUid\SymfonyUuidValidator'
+    App\Domain\Port\Persistence\TransactionInterface: '@App\Infrastructure\Persistence\Doctrine\DoctrineTransaction'
+    App\Domain\Port\Workflow\WorkflowEngineInterface: '@App\Infrastructure\Workflow\Symfony\SymfonyWorkflowEngine'
+
+    # —— Use cases needing scalar configuration ——
+    App\Application\UseCase\System\CheckSystemStatus\CheckSystemStatusUseCase:
+        arguments:
+            $environment: '%kernel.environment%'
+            $version: '%app.version%'
+
+when@test:
+    services:
+        # No Monolog bundle is installed: the framework's fallback logger writes
+        # every record to stderr, including the expected exceptions of negative
+        # path tests (404, 409, 422...). Silence it in tests only.
+        logger:
+            class: Psr\Log\NullLogger

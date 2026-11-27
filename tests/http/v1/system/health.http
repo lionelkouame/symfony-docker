@@ -1,0 +1,16 @@
+# Manual checks with the JetBrains HTTP client or the Visual Studio Code REST Client.
+# Change the variables below to target another host or port.
+@baseUrl = https://localhost
+@apiUrl = {{baseUrl}}/api/v1
+
+# @name checkSystemStatus
+### Health check (V1)
+GET {{apiUrl}}/health
+Accept: application/json
+
+###
+
+# @name openApiSpec
+### OpenAPI specification
+GET {{baseUrl}}/api/docs
+Accept: application/vnd.openapi+json

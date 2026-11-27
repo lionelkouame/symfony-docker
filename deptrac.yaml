@@ -1,0 +1,52 @@
+# Clean Architecture dependency rule (ADR 0002): dependencies only point inwards.
+#
+#   Infrastructure ──► Application ──► Domain
+#
+# Run: make deptrac (also part of make test and of the CI).
+deptrac:
+  paths:
+    - ./src
+  exclude_files:
+    - "#.*/vendor/.*#"
+
+  layers:
+    - name: Domain
+      collectors:
+        - type: classLike
+          value: ^App\\Domain\\.*
+
+    # Entry points of the Application layer.
+    - name: UseCase
+      collectors:
+        - type: classLike
+          value: ^App\\Application\\UseCase\\.*
+
+    # Logic shared by several use cases (ADR 0012): only use cases may call it.
+    - name: ApplicationService
+      collectors:
+        - type: classLike
+          value: ^App\\Application\\Service\\.*
+
+    - name: Infrastructure
+      collectors:
+        - type: classLike
+          value: ^App\\Infrastructure\\.*
+
+    # Third-party code. Listing it as layers is what makes the rules below
+    # forbid it in the core: a vendor that is not a layer is not checked.
+    - name: Vendor
+      collectors:
+        - type: classLike
+          value: ^(Symfony|Doctrine|ApiPlatform|Psr|Webmozart|Nelmio|Twig)\\.*
+
+  ruleset:
+    Domain: []
+    UseCase:
+      - Domain
+      - ApplicationService
+    ApplicationService:
+      - Domain
+    Infrastructure:
+      - Domain
+      - UseCase
+      - Vendor

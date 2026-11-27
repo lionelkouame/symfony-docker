@@ -1,0 +1,27 @@
+name: "🐛 Bug"
+description: Something does not work as expected
+title: "[BUG] "
+labels: ["type: bug"]
+body:
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happens
+      description: Request, command or steps, and the actual result (status code, error message)
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What was expected
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Branch / version, dev or prod, anything relevant
+    validations:
+      required: false

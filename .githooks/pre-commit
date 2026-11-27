@@ -1,0 +1,14 @@
+#!/bin/sh
+# Shared pre-commit hook, enabled with `make setup-hooks`.
+# Bypass exceptionally with `git commit --no-verify`.
+
+echo "🔍 [pre-commit] Running the quality gate (Deptrac + PHPStan + PHPUnit)..."
+
+if ! make test; then
+	echo ""
+	echo "❌ [pre-commit] Tests or architecture checks failed."
+	echo "💡 Fix the failing tests or the architecture violations before committing."
+	exit 1
+fi
+
+echo "✅ [pre-commit] All tests and architecture checks passed."
